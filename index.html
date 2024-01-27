@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Perfiles</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <!-- Coloca tu logo en la carpeta del proyecto y ajusta la ruta en src -->
+        <img src="./logoblanco.png" alt="Logo de tu empresa" >
+        <h1>Calculadora de Perfiles</h1>
+      </header>
+  <div>
+    <label for="longitudPieza">Longitud de la pieza:</label>
+    <input type="number" id="longitudPieza" placeholder="Ingrese la longitud de la pieza en mm">
+  </div>
+  <div>
+    <label for="cantidadPiezas">Cantidad de piezas:</label>
+    <input type="number" id="cantidadPiezas" placeholder="Ingrese la cantidad de piezas">
+  </div>
+  <button onclick="calcular()">Calcular</button>
+
+  <div id="app"></div>
+
+  <script>
+    function calcular() {
+      // Obtener los valores de los campos de entrada
+      const longitudPieza = parseInt(document.getElementById('longitudPieza').value);
+      const cantidadPiezas = parseInt(document.getElementById('cantidadPiezas').value);
+
+      // Validar que se hayan ingresado números válidos
+      if (isNaN(longitudPieza) || isNaN(cantidadPiezas) || longitudPieza <= 0 || cantidadPiezas <= 0) {
+        alert('Ingrese valores numéricos válidos y mayores que cero.');
+        return;
+      }
+
+      // Calcular la longitud de cada tira (supongamos que todas las tiras tienen la misma longitud)
+      const longitudTira = 5950;
+
+      // Calcular el número de fracciones que podemos obtener de cada tira
+      const fraccionesEnTira = Math.floor(longitudTira / longitudPieza);
+
+      // Calcular el número de tiras completas necesarias
+      const numTirasCompletas = Math.floor(cantidadPiezas / fraccionesEnTira);
+
+      // Calcular la cantidad de fracciones adicionales necesarias
+      const fraccionesAdicionales = cantidadPiezas % fraccionesEnTira;
+
+      // Calcular el excedente total
+      const excedenteTotal = longitudTira * numTirasCompletas - longitudPieza * cantidadPiezas;
+
+      // Crear un array para almacenar los resultados por tira
+      const resultadosTiras = [];
+
+      // Almacenar resultados para cada tira completa
+      for (let i = 0; i < numTirasCompletas; i++) {
+        resultadosTiras.push(`Tira ${i + 1}: ${fraccionesEnTira} Piezas`);
+      }
+
+      // Considerar fracciones adicionales y excedente total
+      if (fraccionesAdicionales > 0) {
+        resultadosTiras.push(`Piezas adicionales: ${fraccionesAdicionales}`);
+      }
+
+      resultadosTiras.push(`Excedente total: ${excedenteTotal} mm`);
+
+      // Mostrar los resultados en el elemento con id "app"
+      const appElement = document.getElementById('app');
+      appElement.innerHTML = ''; // Limpiar resultados anteriores
+      resultadosTiras.forEach(resultado => {
+        const resultadoElement = document.createElement('p');
+        resultadoElement.textContent = resultado;
+        appElement.appendChild(resultadoElement);
+      });
+    }
+  </script>
+</body>
+</html>
