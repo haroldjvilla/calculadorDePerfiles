@@ -61,6 +61,16 @@ body {
     margin: 0; /* Elimina el margen predeterminado del título */
   }
 
+  footer {
+    background-color: #c2c2c2;
+    color: rgb(105, 105, 105);
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
   /* Media query para dispositivos más pequeños */
   @media only screen and (max-width: 600px) {
     input {
